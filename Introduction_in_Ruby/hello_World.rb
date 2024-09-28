@@ -4,7 +4,6 @@ puts("Hello World!")
 # Проверяем, передан ли аргумент программе
 if ARGV.length == 0
 	puts("Укажите ваше имя")
-	# Завершаем программу, если аргумент не был передан
 	exit
 end
 
@@ -25,7 +24,6 @@ if favorite_language == "ruby"
 else
 	puts "Скоро будет Ruby, #{user_name}!"
 	
-	# Обрабатываем разные ответы
 	case favorite_language
 	when "python"
 		puts "Ruby лучше чем Python"
@@ -34,7 +32,6 @@ else
 	when "javascript"
     	puts "Ruby лучше чем JavaScript"
 	else
-		# Иначе
 		puts "Я не знаю, что сказать о #{favorite_language}..."		
 	end
 end
