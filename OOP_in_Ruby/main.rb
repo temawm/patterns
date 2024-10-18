@@ -7,3 +7,6 @@ student3 = Student.new(id: 3, last_name: "Сидоров", first_name: "Сидо
 puts student1
 puts student2
 puts student3
+
+student1.phone = "987654321"
+puths student1
