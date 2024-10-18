@@ -1,5 +1,18 @@
 require 'mathn' 
 
+def find_special_numbers(number)
+  # Найти все делители числа
+  divs = divisors(number)
+  # Найти сумму простых цифр
+  sum_prime_digits = sum_of_prime_digits(number)
+  # Найти все числа, не являющиеся делителями
+  non_divisors = (1..number).reject { |i| divs.include?(i) }
+  # Найти числа, не являющиеся взаимно простыми с исходным числом
+  non_coprime = non_divisors.reject { |i| gcd(i, number) == 1 }
+  # Найти числа, которые взаимно просты с суммой простых цифр
+  result = non_coprime.select { |i| gcd(i, sum_prime_digits) == 1 }
+end
+
 # Функция для проверки, является ли число простым
 def prime?(n)
   return false if n <= 1
@@ -23,7 +36,6 @@ def divisors(n)
   result
 end
 
-
 # Функция для нахождения суммы простых цифр
 def sum_of_prime_digits(n)
   sum = 0
@@ -38,19 +50,5 @@ end
 print "Введите число: "
 number = gets.to_i
 
-# Найти все делители числа
-divs = divisors(number)
-
-# Найти сумму простых цифр
-sum_prime_digits = sum_of_prime_digits(number)
-
-# Найти все числа, не являющиеся делителями
-non_divisors = (1..number).reject { |i| divs.include?(i) }
-
-# Найти числа, не являющиеся взаимно простыми с исходным числом
-non_coprime = non_divisors.reject { |i| gcd(i, number) == 1 }
-
-# Найти числа, которые взаимно просты с суммой простых цифр
-result = non_coprime.select { |i| gcd(i, sum_prime_digits) == 1 }
-
+result = find_special_numbers(number)
 puts "Количество таких чисел: #{result.length}"
