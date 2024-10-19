@@ -65,6 +65,19 @@ class Student
     end
   end
 
+  def contact_present?
+    !(@phone.nil? && @telegram.nil? && @email.nil?)
+  end
+
+  def github_present?
+    !@github.nil? && Student.valid_github?(@github)
+  end
+  def validate
+    raise "Нет контакта для связи" unless contact_present?
+    raise "Нет ссылки на GitHub" unless github_present?
+    true
+  end
+
   def to_s
     "ID: #{@id}, ФИО: #{@last_name} #{@first_name} #{@middle_name}, " +
     "Телефон: #{@phone || 'не указан'}, Telegram: #{@telegram || 'не указан'}, " +
