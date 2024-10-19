@@ -81,6 +81,16 @@ class Student
     raise "Нет ссылки на GitHub" unless github_present?
     true
   end
+  
+  def get_info
+    contacts = []
+    contacts << "GitHub: #{@github}" if @github
+    contacts << "Телефон: #{@phone}" if @phone
+    contacts << "Telegram: #{@telegram}" if @telegram
+    contacts_info = contacts.join(', ')
+
+    "#{@last_name} #{@first_name[0]}.#{@middle_name[0]}. (#{contacts_info})"
+  end
 
   def to_s
     "ID: #{@id}, ФИО: #{@last_name} #{@first_name} #{@middle_name}, " +
