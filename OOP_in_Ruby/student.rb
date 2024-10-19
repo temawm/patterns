@@ -1,17 +1,21 @@
 class Student
-  attr_reader :id, :last_name, :first_name, :middle_name
-  attr_accessor :telegram, :email, :github
+  attr_reader :id, :last_name, :first_name, :middle_name, :telegram, :email, :github 
 
   def initialize(id:, last_name:, first_name:, middle_name:, phone: nil, telegram: nil, email: nil, github: nil)
     @id = id
     @last_name = last_name
     @first_name = first_name
     @middle_name = middle_name
+    set_contacts(phone: phone, telegram: telegram, email: email, github: github)
+  end
+  
+  def set_contacts(phone: nil, telegram: nil, email: nil, github: nil)
     self.phone = phone
     self.telegram = telegram
     self.email = email
     self.github = github
   end
+  private
 
   def self.valid_phone_number?(phone)
     phone =~ /^\d{10,15}$/
