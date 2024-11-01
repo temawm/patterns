@@ -1,12 +1,39 @@
-require_relative 'student'
+require_relative 'person' 
+require_relative 'student'    
+require_relative 'student_short' 
 
-student1 = Student.new(id: 1, last_name: "Иванов", first_name: "Иван", middle_name: "Иванович", phone: "123456789", telegram: "@ivanov", email: "ivanov@example.com", github: "github.com/ivanov")
-student2 = Student.new(id: 2, last_name: "Петров", first_name: "Петр", middle_name: "Петрович")
-student3 = Student.new(id: 3, last_name: "Сидоров", first_name: "Сидор", middle_name: "Сидорович", phone: "987654321", github: "github.com/sidorov")
+person = Person.new(
+  id: 1,
+  last_name: "Усков",
+  first_name: "Артём",
+  middle_name: "Алексеевич",
+  phone: "1234567890",
+  telegram: "@tema",
+  email: "tema@example.com",
+  github: "https://github.com/tema"
+)
 
-puts student1
-puts student2
-puts student3
+puts "Person:"
+puts "ID: #{person.id}, Name: #{person.last_name} #{person.first_name} #{person.middle_name}, Phone: #{person.phone}, Telegram: #{person.telegram}, Email: #{person.email}, GitHub: #{person.github}"
 
-student1.phone = "987654321"
-puths student1
+
+student_from_person = Student.from_person(person)
+puts "\nStudent from Person:"
+puts student_from_person.get_info
+
+contact_info_string = "Усков Артём Алексеевич, GitHub: https://github.com/tema, Телефон: 1234567890, Telegram: @tema"
+student_from_string = Student.from_string(id: 2, contact_info: contact_info_string)
+puts "\nStudent from Contact Info String:"
+puts student_from_string.get_info
+
+student_short_from_person = StudentShort.from_person(person)
+puts "\nStudentShort from Person:"
+puts student_short_from_person.get_info
+
+student_short_from_student = StudentShort.from_student(student_from_person)
+puts "\nStudentShort from Student:"
+puts student_short_from_student.get_info
+
+student_short_from_string = StudentShort.from_contact_info(3, contact_info_string)
+puts "\nStudentShort from Contact Info String:"
+puts student_short_from_string.get_info
