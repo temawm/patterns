@@ -1,24 +1,5 @@
 class Student < Person
   private_class_method :new
-  
-  def self.from_person(person)
-    new(
-      id: person.id,
-      last_name: person.last_name,
-      first_name: person.first_name,
-      middle_name: person.middle_name,
-      phone: person.phone,
-      telegram: person.telegram,
-      email: person.email,
-      github: person.github
-    )
-  end
-
-  def self.from_string(id:, contact_info:)
-    student = new(id: id, last_name: '', first_name: '', middle_name: '')
-    student.parse_contact_info(contact_info)  # Этот вызов теперь будет работать
-    student
-  end
 
   def initialize(id:, last_name:, first_name:, middle_name:, phone: nil, telegram: nil, email: nil, github: nil)
     super(id: id, last_name: last_name, first_name: first_name, middle_name: middle_name, phone: phone, telegram: telegram, email: email, github: github)
@@ -29,7 +10,6 @@ class Student < Person
     "#{last_name} #{first_name} #{middle_name}. (#{contacts_info})"
   end
 
-  # Сделайте parse_contact_info публичным
   def parse_contact_info(contact_info)
     match = contact_info.match(/(.+), GitHub: (.+), Телефон: (.+), Telegram: (.+)/)
     if match
@@ -46,6 +26,11 @@ class Student < Person
 
   private
 
+  def initials
+		"#{middle_name} #{first_name[0]}.#{last_name[0]}."
+  end
+
+
   def generate_contact_info
     contacts = []
     contacts << "GitHub: #{github}" if github
@@ -54,3 +39,9 @@ class Student < Person
     contacts.join(', ')
   end
 end
+
+def contact
+    	return phone_number if phone_number
+    	return email if email
+    	return telegram if telegram
+	end

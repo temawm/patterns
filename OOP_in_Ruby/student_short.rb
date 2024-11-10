@@ -1,66 +1,44 @@
 class StudentShort < Person
-  attr_reader :contact_info
-
-  def self.from_person(person)
-    new(
-      id: person.id,
-      last_name: person.last_name,
-      first_name: person.first_name,
-      middle_name: person.middle_name,
-      phone: person.phone,
-      telegram: person.telegram,
-      email: person.email,
-      github: person.github
-    )
-  end
+  private_class_method :new
 
   def self.from_student(student)
     new(
-      id: student.id,
-      last_name: student.last_name,
-      first_name: student.first_name,
-      middle_name: student.middle_name,
-      phone: student.phone,
-      telegram: student.telegram,
-      email: student.email,
-      github: student.github
-    )
+	  id: student.id,
+	  surname_initials: student.initials,
+	  contact: student.contact,
+	  github: student.github
+	)
+
   end
 
   def self.from_contact_info(id, contact_info)
-    match = contact_info.match(/(.+), GitHub: (.+)?, Телефон: (.+)?, Telegram: (.+)?/)
+    match = contact_info.match(/(.+), GitHub: (.+)?, Телефон: (.+)?, Telegram: (.+)?, Email: (.+)?/)
     raise ArgumentError, "Некорректный формат строки contact_info" unless match
 
     name_parts = match[1].split(' ')
-    last_name = name_parts[0]
-    first_name = name_parts[1] || ""  # Пустая строка, если имя отсутствует
-    middle_name = name_parts[2] || ""  # Пустая строка, если отчество отсутствует
+    surname_initials = name_parts[1] + name_parts[2][0] + name_parts[3][0]
 
     new(
       id: id,
-      last_name: last_name,
-      first_name: first_name,
-      middle_name: middle_name,
-      phone: match[3],
-      telegram: match[4],
-      github: match[2]
+      surname_initials: surname_initials,
+	  github: match[2],
+      contact: match[5] || match[3] || match[4]
     )
   end
 
-  def initialize(id:, last_name:, first_name: "", middle_name: "", phone: nil, telegram: nil, email: nil, github: nil)
-    super(id: id, last_name: last_name, first_name: first_name, middle_name: middle_name, phone: phone, telegram: telegram, email: email, github: github)
-    @contact_info = get_info
+  def initialize(surname_initials, id: nil, git: nil, contact: nil)
+	@surname_initials = surname_initials
+	@contact = contact
+    super(id: id, git: git)
   end
 
   def get_info
     contacts = []
     contacts << "GitHub: #{@github}" if @github
-    contacts << "Телефон: #{@phone}" if @phone
-    contacts << "Telegram: #{@telegram}" if @telegram
+    contacts << "Контакт: #{@contact}" if @contact
     contacts_info = contacts.join(', ')
 
-    initials = "#{@first_name[0]}.#{@middle_name[0]}." unless @first_name.empty? || @middle_name.empty?
-    "#{@last_name} #{initials} (#{contacts_info})"
+    initials = "#{@surname_initials} (#{contacts_info})"
   end
 
   private
