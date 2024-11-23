@@ -1,8 +1,20 @@
-class Student < Person
-  private_class_method :new
+require_relative 'person'
 
-  def initialize(id:, last_name:, first_name:, middle_name:, phone: nil, telegram: nil, email: nil, github: nil)
-    super(id: id, last_name: last_name, first_name: first_name, middle_name: middle_name, phone: phone, telegram: telegram, email: email, github: github)
+class Student < Person
+  attr_reader :last_name, :first_name, :middle_name, :phone, :telegram, :email
+
+  def initialize(id:, github: nil, last_name:, first_name:, middle_name:, phone: nil, telegram: nil, email: nil)
+    super(id: id, github: github)
+    self.middle_name = middle_name
+	self.first_name = first_name
+	self.last_name = last_name
+    set_contacts(phone: phone, telegram: telegram, email: email)
+  end
+  
+  def set_contacts(phone: nil, telegram: nil, email: nil)
+    self.phone = phone
+    self.telegram = telegram
+    self.email = email
   end
 
   def get_info
@@ -10,38 +22,70 @@ class Student < Person
     "#{last_name} #{first_name} #{middle_name}. (#{contacts_info})"
   end
 
-  def parse_contact_info(contact_info)
-    match = contact_info.match(/(.+), GitHub: (.+), Телефон: (.+), Telegram: (.+)/)
-    if match
-      @last_name = match[1]
-      @github = match[2]
-      @phone = match[3]
-      @telegram = match[4]
-      @first_name = ""
-      @middle_name = ""
-    else
-      raise ArgumentError, "Некорректный формат строки contact_info"
-    end
+  def initials
+    "#{last_name} #{first_name[0]}.#{middle_name[0]}."
   end
 
   private
-
-  def initials
-		"#{middle_name} #{first_name[0]}.#{last_name[0]}."
+  
+  def self.valid_name_parts?(string)
+    string.match?(/\A[A-ZА-Я][a-zа-яё\-']{0,}\z/)
+  end
+  
+  def middle_name=(middle_name)
+    self.class.valid_name_parts?(middle_name) ? @middle_name = middle_name : raise(ArgumentError, middle_name)
   end
 
+  def first_name=(first_name)
+    self.class.valid_name_parts?(first_name) ? @first_name = first_name : raise(ArgumentError, first_name)
+  end
+
+  def last_name=(last_name)
+    self.class.valid_name_parts?(last_name) ? @last_name = last_name : raise(ArgumentError, last_name)
+  end
+
+  def phone=(phone)
+    if self.class.phone_checker(phone)
+      @phone = phone
+    else
+      raise ArgumentError, "Некорректный номер телефона"
+    end
+  end
+
+  def telegram=(telegram)
+    if self.class.telegram_checker(telegram)
+      @telegram = telegram
+    else
+      raise ArgumentError, "Некорректный Telegram. Он должен начинаться с @"
+    end
+  end
+
+  def email=(email)
+    if self.class.email_checker(email)
+      @email = email
+    else
+      raise ArgumentError, "Некорректный email"
+    end
+  end
+
+  def self.phone_checker(phone)
+    phone.nil? || phone =~ /^\d{10,15}$/
+  end
+
+  def self.email_checker(email)
+    email.nil? || email.include?('@')
+  end
+
+  def self.telegram_checker(telegram)
+    telegram.nil? || telegram.start_with?('@')
+  end
 
   def generate_contact_info
     contacts = []
     contacts << "GitHub: #{github}" if github
     contacts << "Телефон: #{phone}" if phone
     contacts << "Telegram: #{telegram}" if telegram
+    contacts << "Email: #{email}" if email
     contacts.join(', ')
   end
 end
-
-def contact
-    	return phone_number if phone_number
-    	return email if email
-    	return telegram if telegram
-	end
