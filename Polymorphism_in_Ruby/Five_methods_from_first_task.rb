@@ -23,3 +23,14 @@ def indices_and_count_of_smaller_than_left(array)
   puts "Количество таких элементов: #{count}"
 end
 
+def unique_prime_divisors(array)
+  array.flat_map do |num|
+    (2..num).select do |i|
+      num % i == 0 && (2..Math.sqrt(i)).none? { |j| i % j == 0 }
+    end
+  end.uniq
+  puts "Простые делители: #{primes}"
+  primes
+end
+
+
