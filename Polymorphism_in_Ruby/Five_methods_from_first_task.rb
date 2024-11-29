@@ -16,3 +16,10 @@ def max_in_interval(array, a, b)
   puts "Максимальный элемент в интервале #{a}..#{b}: #{max_element}"
 end
 
+def indices_and_count_of_smaller_than_left(array)
+  indices = array.each_with_index.select { |el, idx| idx > 0 && el < array[idx - 1] }.map(&:last)
+  count = indices.size
+  puts "Индексы элементов: #{indices.inspect}"
+  puts "Количество таких элементов: #{count}"
+end
+
