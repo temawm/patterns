@@ -10,3 +10,9 @@ def move_before_min_to_end(array)
   result = array[min_index..-1] + array[0...min_index]
   puts "Новый массив: #{result.inspect}"
 end
+
+def max_in_interval(array, a, b)
+  max_element = array[a..b].max
+  puts "Максимальный элемент в интервале #{a}..#{b}: #{max_element}"
+end
+
