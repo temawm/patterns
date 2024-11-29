@@ -5,6 +5,10 @@ class Person
     @id = id
     self.github = github
   end
+  
+  def self.github_checker(github)
+    github.nil? || github.match?(/^https:\/\/github\.com\/[a-zA-Z0-9_-]+/)
+  end
 
   private
 
@@ -16,7 +20,4 @@ class Person
     end
   end
 
-  def self.github_checker(github)
-    github.nil? || github.match?(/^https:\/\/github\.com\/[a-zA-Z0-9_-]+/)
-  end
 end

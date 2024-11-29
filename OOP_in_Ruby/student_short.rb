@@ -29,7 +29,7 @@ class StudentShort < Person
     )
   end
 
-  def initialize(id:, github: nil, surname_initials:, contact: nil)
+  def initialize(id:, surname_initials:, contact: nil, github: nil)
     super(id: id, github: github)
     @surname_initials = surname_initials
     @contact = contact

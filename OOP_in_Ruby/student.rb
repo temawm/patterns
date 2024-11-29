@@ -2,8 +2,8 @@ require_relative 'person'
 
 class Student < Person
   attr_reader :last_name, :first_name, :middle_name, :phone, :telegram, :email
-
-  def initialize(id:, github: nil, last_name:, first_name:, middle_name:, phone: nil, telegram: nil, email: nil)
+		
+  def initialize(last_name:, first_name:, middle_name:, phone: nil, telegram: nil, email: nil, id: nil, github: nil)
     super(id: id, github: github)
     self.middle_name = middle_name
 	self.first_name = first_name
@@ -25,8 +25,6 @@ class Student < Person
   def initials
     "#{last_name} #{first_name[0]}.#{middle_name[0]}."
   end
-
-  private
   
   def self.valid_name_parts?(string)
     string.match?(/\A[A-ZА-Я][a-zа-яё\-']{0,}\z/)
@@ -43,6 +41,29 @@ class Student < Person
   def last_name=(last_name)
     self.class.valid_name_parts?(last_name) ? @last_name = last_name : raise(ArgumentError, last_name)
   end
+  
+  def self.phone_checker(phone)
+    phone.nil? || phone =~ /^\d{10,15}$/
+  end
+
+  def self.email_checker(email)
+    email.nil? || email.include?('@')
+  end
+
+  def self.telegram_checker(telegram)
+    telegram.nil? || telegram.start_with?('@')
+  end
+  
+  def generate_contact_info
+    contacts = []
+    contacts << "GitHub: #{github}" if github
+    contacts << "Телефон: #{phone}" if phone
+    contacts << "Telegram: #{telegram}" if telegram
+    contacts << "Email: #{email}" if email
+    contacts.join(', ')
+  end
+  
+  private
 
   def phone=(phone)
     if self.class.phone_checker(phone)
@@ -68,24 +89,4 @@ class Student < Person
     end
   end
 
-  def self.phone_checker(phone)
-    phone.nil? || phone =~ /^\d{10,15}$/
-  end
-
-  def self.email_checker(email)
-    email.nil? || email.include?('@')
-  end
-
-  def self.telegram_checker(telegram)
-    telegram.nil? || telegram.start_with?('@')
-  end
-
-  def generate_contact_info
-    contacts = []
-    contacts << "GitHub: #{github}" if github
-    contacts << "Телефон: #{phone}" if phone
-    contacts << "Telegram: #{telegram}" if telegram
-    contacts << "Email: #{email}" if email
-    contacts.join(', ')
-  end
 end
