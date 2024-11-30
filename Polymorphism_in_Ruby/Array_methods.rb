@@ -5,3 +5,13 @@ def custom_find_all
     end
     result
   end
+  
+def custom_min_max
+    min = @array.first
+    max = @array.first
+    @array.each do |el|
+      min = el if el < min
+      max = el if el > max
+    end
+    [min, max]
+  end
