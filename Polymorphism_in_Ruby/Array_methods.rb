@@ -30,9 +30,16 @@ class ArrayProcessor
 	end
 	
 	def custom_none?
-    @array.each do |el|
-      return false if yield(el)
-    end
-    true
-  end
+		@array.each do |el|
+		  return false if yield(el)
+		end
+		true
+	end
+	
+	def custom_find_index
+		@array.each_with_index do |el, index|
+		  return index if yield(el)
+		end
+		nil
+	end
 end
