@@ -28,4 +28,11 @@ class ArrayProcessor
 		end
 		accumulator
 	end
+	
+	def custom_none?
+    @array.each do |el|
+      return false if yield(el)
+    end
+    true
+  end
 end
