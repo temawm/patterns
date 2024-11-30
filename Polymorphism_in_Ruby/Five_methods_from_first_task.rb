@@ -27,13 +27,12 @@ def max_in_interval(array, a, b)
 end
 
 # Задача 4: Индексы элементов, которые меньше своего левого соседа, и их количество
-def indices_and_count_less_than_left(array)
-  def indices_and_count_of_smaller_than_left(array)
-	  indices = array.each_with_index.select { |el, idx| idx > 0 && el < array[idx - 1] }.map(&:last)
-	  count = indices.size
-	  { indices: indices.inspect, count: count }
-	end
+def indices_and_count_of_smaller_than_left(array)
+  indices = array.each_with_index.select { |el, idx| idx > 0 && el < array[idx - 1] }.map(&:last)
+  count = indices.size
+  { indices: indices.inspect, count: count }
 end
+
 
 # Задача 5: Простые делители всех элементов массива без повторений
 def unique_prime_divisors(array)
@@ -83,7 +82,7 @@ def main
     a, b = gets.split.map(&:to_i)
     puts "#{max_in_interval(array, a, b)}"
   when 4
-    result = indices_and_count_less_than_left(array)
+    result = indices_and_count_of_smaller_than_left(array)
     puts "Индексы элементов: #{result[:indices]}"
 	puts "Количество таких элементов: #{result[:count]}"
   when 5
