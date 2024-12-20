@@ -1,7 +1,7 @@
 require_relative 'person'
 
 class StudentShort < Person
-  attr_reader :surname_initials, :contact
+  attr_reader :initials, :contact
 
   private_class_method :new
 
@@ -9,7 +9,7 @@ class StudentShort < Person
     new(
       id: student.id,
       github: student.github,
-      surname_initials: student.initials,
+      initials: student.initials,
       contact: student.phone || student.telegram || student.email
     )
   end
@@ -18,29 +18,28 @@ class StudentShort < Person
     match = contact_info.match(/(.+?)\s+(.+?), GitHub: (.+?), Телефон: (.+?), Telegram: (@\w+)/)
     raise ArgumentError, "Некорректный формат строки contact_info" unless match
 
-    surname_initials = "#{match[1]} #{match[2][0]}."
+    initials = "#{match[1]} #{match[2][0]}."
     contact = match[4] || match[5]
 
     new(
       id: id,
       github: match[3],
-      surname_initials: surname_initials,
+      initials: initials,
       contact: contact
     )
   end
 
-  def initialize(id:, surname_initials:, contact: nil, github: nil)
+  def initialize(id:, initials:, contact: nil, github: nil)
     super(id: id, github: github)
-    @surname_initials = surname_initials
+    @initials = initials
     @contact = contact
   end
-
-  def get_info
-    contacts = []
-    contacts << "GitHub: #{github}" if github
+  
+  def get_info()
+	contacts = []s
     contacts << "Контакт: #{@contact}" if @contact
     contacts_info = contacts.join(', ')
+    "#{@initials} #{github} #{contacts_info})"
+  end 
 
-    "#{@surname_initials} (#{contacts_info})"
-  end
 end

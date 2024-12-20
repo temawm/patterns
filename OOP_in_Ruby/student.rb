@@ -16,11 +16,11 @@ class Student < Person
     self.telegram = telegram
     self.email = email
   end
-
-  def get_info
-    contacts_info = generate_contact_info
+  
+  def get_info()
+	contacts_info = generate_contact_info
     "#{last_name} #{first_name} #{middle_name}. (#{contacts_info})"
-  end
+  end 
 
   def initials
     "#{last_name} #{first_name[0]}.#{middle_name[0]}."
@@ -56,11 +56,16 @@ class Student < Person
   
   def generate_contact_info
     contacts = []
-    contacts << "GitHub: #{github}" if github
     contacts << "Телефон: #{phone}" if phone
     contacts << "Telegram: #{telegram}" if telegram
     contacts << "Email: #{email}" if email
     contacts.join(', ')
+  end
+  
+  def contact()
+	return phone if phone
+	return telegram if telegram
+	return email if email
   end
   
   private
@@ -90,3 +95,6 @@ class Student < Person
   end
 
 end
+
+
+

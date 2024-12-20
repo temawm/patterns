@@ -23,7 +23,7 @@ end
 
 # Задача 3: Найти максимальный элемент в интервале a..b
 def max_in_interval(array, a, b)
-  puts "Максимальный элементв интервале: #{array[a..b].max}"
+  {array[a..b].max}
 end
 
 # Задача 4: Индексы элементов, которые меньше своего левого соседа, и их количество
@@ -80,7 +80,7 @@ def main
   when 3
     puts "Введите интервал (a b): "
     a, b = gets.split.map(&:to_i)
-    puts "#{max_in_interval(array, a, b)}"
+    puts "Максимальный элементв интервале: #{max_in_interval(array, a, b)}"
   when 4
     result = indices_and_count_of_smaller_than_left(array)
     puts "Индексы элементов: #{result[:indices]}"
