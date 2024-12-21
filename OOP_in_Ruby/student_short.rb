@@ -1,7 +1,7 @@
 require_relative 'person'
 
 class StudentShort < Person
-  attr_reader :initials, :contact
+  attr_reader :id, :initials, :contact
 
   private_class_method :new
 
@@ -36,10 +36,7 @@ class StudentShort < Person
   end
   
   def get_info()
-	contacts = []s
-    contacts << "Контакт: #{@contact}" if @contact
-    contacts_info = contacts.join(', ')
-    "#{@initials} #{github} #{contacts_info})"
+    "#{@initials} #{github} Контакт: #{@contact}"
   end 
 
 end

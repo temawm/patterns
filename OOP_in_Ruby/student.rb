@@ -1,7 +1,8 @@
 require_relative 'person'
 
 class Student < Person
-  attr_reader :last_name, :first_name, :middle_name, :phone, :telegram, :email
+  attr_reader :last_name, :first_name, :middle_name, :phone, :telegram, :email, :id , :github
+  attr_writer :last_name, :firs_name, :middle_name
 		
   def initialize(last_name:, first_name:, middle_name:, phone: nil, telegram: nil, email: nil, id: nil, github: nil)
     super(id: id, github: github)
@@ -55,11 +56,9 @@ class Student < Person
   end
   
   def generate_contact_info
-    contacts = []
-    contacts << "Телефон: #{phone}" if phone
-    contacts << "Telegram: #{telegram}" if telegram
-    contacts << "Email: #{email}" if email
-    contacts.join(', ')
+    return "Телефон: #{phone}" if phone
+    return "Telegram: #{telegram}" if telegram
+    return "Email: #{email}" if email
   end
   
   def contact()
@@ -91,6 +90,14 @@ class Student < Person
       @email = email
     else
       raise ArgumentError, "Некорректный email"
+    end
+  end
+  
+  def github=(github)
+    if Person.github_checker(github)
+      @github = github
+    else
+      raise ArgumentError, "Некорректный git"
     end
   end
 
