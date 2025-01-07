@@ -1,7 +1,7 @@
 require_relative 'person'
 
 class StudentShort < Person
-  attr_reader :id, :initials, :contact
+  attr_reader :id, :github, :initials, :contact
 
   private_class_method :new
 
@@ -10,7 +10,7 @@ class StudentShort < Person
       id: student.id,
       github: student.github,
       initials: student.initials,
-      contact: student.phone || student.telegram || student.email
+      contact: student.contact
     )
   end
 
@@ -38,5 +38,13 @@ class StudentShort < Person
   def get_info()
     "#{@initials} #{github} Контакт: #{@contact}"
   end 
+  
+  def contact
+	"Контакт: #{@contact}"
+  end
+  
+  def initials()
+	"Инициалы: #{@initials}"
+  end
 
 end

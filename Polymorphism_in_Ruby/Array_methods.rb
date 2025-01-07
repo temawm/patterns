@@ -22,7 +22,7 @@ class ArrayProcessor
 	  end
 	  
 	def custom_reduce(initial)
-		if initial != nil
+		if initial != nil || initial.is_a?(Intеger)
 		  accumulator = initial
 		else
 		  accumulator = 0

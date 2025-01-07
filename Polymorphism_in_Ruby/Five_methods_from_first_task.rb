@@ -28,20 +28,25 @@ end
 
 # Задача 4: Индексы элементов, которые меньше своего левого соседа, и их количество
 def indices_and_count_of_smaller_than_left(array)
-  indices = array.each_with_index.select { |el, idx| idx > 0 && el < array[idx - 1] }.map(&:last)
-  count = indices.size
-  { indices: indices.inspect, count: count }
+  indices = (1...array.size).select { |i| array[i] < array[i - 1] }
+  { indices: indices.inspect, count: indices.size }
 end
+
 
 
 # Задача 5: Простые делители всех элементов массива без повторений
 def unique_prime_divisors(array)
-  array.flat_map do |num|
-    (2..num).select do |i|
-      num % i == 0 && (2..Math.sqrt(i)).none? { |j| i % j == 0 }
+  divisors = []
+  array.each do |num|
+    (2..num).each do |i|
+      if num % i == 0 && (2..Math.sqrt(i)).none? { |j| i % j == 0 }
+        divisors << i unless divisors.include?(i)
+      end
     end
-  end.uniq
+  end
+  divisors
 end
+
 
 def task_menu
   puts <<-MENU
