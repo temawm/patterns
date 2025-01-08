@@ -12,14 +12,22 @@ class ArrayProcessor
 	  end
 	  
 	def custom_min_max
-		min = @array.first
-		max = @array.first
-		@array.each do |el|
+	  return nil if @array.empty?
+	  min = @array.first
+	  max = @array.first
+	  @array.each do |el|
+		if block_given?
+		  min = el if yield(el, min) < 0
+		  max = el if yield(el, max) > 0
+		else
 		  min = el if el < min
 		  max = el if el > max
 		end
-		[min, max]
 	  end
+
+	  [min, max]
+	end
+
 	  
 	def custom_reduce(initial)
 		if initial != nil || initial.is_a?(Intеger)

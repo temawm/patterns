@@ -13,17 +13,16 @@ def elements_after_last_max(array)
   count = array[last_max_index + 1..-1].size
 end
 
-
 # Задача 2: Разместить элементы до минимального в конце массива
 def move_before_min_to_end(array)
   min_index = array.index(array.min)
   result = array[min_index..-1] + array[0...min_index]
-  result.inspect
+  result
 end
 
 # Задача 3: Найти максимальный элемент в интервале a..b
 def max_in_interval(array, a, b)
-  {array[a..b].max}
+  array[a..b].max
 end
 
 # Задача 4: Индексы элементов, которые меньше своего левого соседа, и их количество
@@ -36,16 +35,13 @@ end
 
 # Задача 5: Простые делители всех элементов массива без повторений
 def unique_prime_divisors(array)
-  divisors = []
-  array.each do |num|
-    (2..num).each do |i|
-      if num % i == 0 && (2..Math.sqrt(i)).none? { |j| i % j == 0 }
-        divisors << i unless divisors.include?(i)
-      end
+  array.flat_map do |num|
+    (2..num).select do |i|
+      num % i == 0 && (2..Math.sqrt(i)).none? { |j| i % j == 0 }
     end
-  end
-  divisors
+  end.uniq
 end
+
 
 
 def task_menu
