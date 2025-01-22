@@ -1,33 +1,100 @@
 @startuml
 
+class Person {
+    - id: Int
+    - github: String
+    + initialize(id, github)
+    + github_checker(github): Boolean
+    - github(): String
+    * contact(): String
+    * initials(): String
+
+    + id(): String
+    + github(): String
+}
+
+class Student {
+    - last_name: String
+    - middle_name: String
+    - first_name: String
+    - phone: String
+    - telegram: String
+    - email: String
+    + initialize(last_name, first_name, middle_name, phone, telegram, email)
+    + set_contacts(phone, telegram, email)
+    + get_info(): String
+    + contact(): String
+    + initials(): String
+    + valid_name_parts?(string): Boolean
+    + email_checker(email): Boolean
+    + phone_checker(phone): Boolean
+    + telegram_checker(telegram): Boolean
+
+    - phone=(phone)
+    - telegram=(telegram)
+    - email=(email)
+    + github=(github)
+    + last_name=(last_name)
+    + middle_name=(middle_name)
+    + first_name=(first_name)
+
+    + last_name(): String
+    + middle_name(): String
+    + first_name(): String
+    + email(): String
+    + telegram(): String
+    + phone(): String
+}
+
+class Student_short {
+    - initials: String
+    - contact: String
+    + initialize(id, initials, contact, github)
+    + from_student(student): Student_short
+    + from_contact_info(id, contact_info): Student_short
+    + contact(contact): String
+    + initials(initials): String
+    + get_info(): String
+    + values_at(attributes: Array): Array
+
+    + contact(): String
+    + initials(): String
+}
+
+Person <|-- Student
+Person <|-- Student_short
+
 abstract class DataList {
-  - @elements
-  - @selected
-  + initialize(elements)
-  + set_elements(new_elements)
-  + generate_table_data()
-  + select(number)
-  + get_selected()
-  {abstract} * get_names()
-  {abstract} * get_data()
+    - @elements: Array<StudentShort>
+    - @selected: Array<Int>
+    + initialize(elements)
+    + set_elements(new_elements)
+    + generate_table_data()
+    + select(number)
+    + get_selected()
+    {abstract} * get_names(): Array<String>
+    {abstract} * get_data(names: Array<String>): Array<Array<String>>
 }
 
 class DataTable {
-  - @data
-  + initialize(data)
-  + get_element(row, col)
-  + columns_count()
-  + rows_count()
-  + to_a()
-  + each(&block)
+    - @data: Array<Array<String>>
+    + initialize(data)
+    + get_element(row, col)
+    + columns_count()
+    + rows_count()
+    + to_a()
+    + each(&block)
 }
 
 class DataListStudentShort {
-  + get_names()
-  + get_data(names)
+    + get_names(): Array<String>
+    + get_data(names: Array<String>): Array<Array<String>>
 }
 
 DataList <|-- DataListStudentShort
 DataList o-- DataTable : "generates"
+DataList *-- Student_short : "elements"
+
+@enduml
 
 @enduml

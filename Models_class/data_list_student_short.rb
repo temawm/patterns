@@ -8,8 +8,8 @@ class DataListStudentShort < DataList
 
   def get_data(names)
     table_data = @elements.map.with_index do |student, index|
-      row = [index + 1] + student.values_at(*names)
-      puts "Generated row: #{row.inspect}"  # Для отладки
+      row = [index + 1] + student.values_at(names)
+      puts "Generated row: #{row.inspect}"
       row
     end
     DataTable.new(table_data)
