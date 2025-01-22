@@ -1,6 +1,5 @@
 class DataTable
   def initialize(data)
-    raise ArgumentError, "Данные должны быть двумерным массивом" unless data.is_a?(Array) && data.all? { |row| row.is_a?(Array) }
     @data = data
   end
 
@@ -15,4 +14,13 @@ class DataTable
   def rows_count
     @data.size
   end
+  
+  def to_a
+    @data
+  end
+  
+  def each(&block)
+    @data.each(&block)
+  end
+ 
 end

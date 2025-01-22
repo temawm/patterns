@@ -3,8 +3,6 @@ require_relative 'person'
 class StudentShort < Person
   attr_reader :id, :github, :initials, :contact
 
-  private_class_method :new
-
   def self.from_student(student)
     new(
       id: student.id,
@@ -45,6 +43,17 @@ class StudentShort < Person
   
   def initials()
 	"Инициалы: #{@initials}"
+  end
+  
+  def values_at(*attributes)
+    attributes.map do |attr|
+      case attr.to_s
+      when 'initials' then @initials
+      when 'github' then @github
+      when 'contact' then @contact
+      else nil
+      end
+    end
   end
 
 end

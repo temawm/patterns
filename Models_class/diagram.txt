@@ -1,0 +1,33 @@
+@startuml
+
+abstract class DataList {
+  - @elements
+  - @selected
+  + initialize(elements)
+  + set_elements(new_elements)
+  + generate_table_data()
+  + select(number)
+  + get_selected()
+  {abstract} * get_names()
+  {abstract} * get_data()
+}
+
+class DataTable {
+  - @data
+  + initialize(data)
+  + get_element(row, col)
+  + columns_count()
+  + rows_count()
+  + to_a()
+  + each(&block)
+}
+
+class DataListStudentShort {
+  + get_names()
+  + get_data(names)
+}
+
+DataList <|-- DataListStudentShort
+DataList o-- DataTable : "generates"
+
+@enduml

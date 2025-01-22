@@ -2,8 +2,18 @@ require_relative 'data_table'
 
 class DataList
   def initialize(elements)
-    @elements = elements.sort
+    @elements = elements
     @selected = []
+  end
+  
+  def set_elements(new_elements)
+    @elements = new_elements
+  end
+  
+  def generate_table_data
+    names = get_names
+    table_data = get_data(names)
+    DataTable.new(table_data)
   end
 
   def select(number)
