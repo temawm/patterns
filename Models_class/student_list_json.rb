@@ -1,5 +1,6 @@
 require 'json'
 require 'C:/Users/temaf/NotepadFiles/OOP_in_Ruby/student'
+require 'C:/Users/temaf/NotepadFiles/OOP_in_Ruby/student_short'
 require_relative 'data_list'
 
 class Students_list_JSON
