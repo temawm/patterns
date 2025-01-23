@@ -10,9 +10,9 @@ class DataList
     @elements = new_elements
   end
   
-  def generate_table_data
+  def get_data
     names = get_names
-    table_data = get_data(names)
+    table_data = generate_data(names)
     DataTable.new(table_data)
   end
 
@@ -29,7 +29,7 @@ class DataList
     raise NotImplementedError, "Метод должен быть реализован в наследниках"
   end
 
-  def get_data
+  def generate_data
     raise NotImplementedError, "Метод должен быть реализован в наследниках"
   end
 end

@@ -30,6 +30,6 @@ students = [student1, student2, student3]
 data_list = DataListStudentShort.new(students)
 
 # Вызываем метод generate_table_data и выводим данные
-table = data_list.generate_table_data
+table = data_list.get_data
 puts "Сгенерированная таблица:"
 table.to_a.each { |row| puts row.inspect }

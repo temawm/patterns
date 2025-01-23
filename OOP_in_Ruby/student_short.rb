@@ -45,7 +45,7 @@ class StudentShort < Person
 	"Инициалы: #{@initials}"
   end
   
-  def values_at(*attributes)
+  def values_at(attributes)
     attributes.map do |attr|
       case attr.to_s
       when 'initials' then @initials
