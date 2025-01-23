@@ -1,19 +1,19 @@
-require 'yaml'
-require 'json'
-
-# Абстрактный суперкласс для списка студентов
+require 'C:/Users/temaf/NotepadFiles/OOP_in_Ruby/student_short'
+require 'C:/Users/temaf/NotepadFiles/OOP_in_Ruby/student'
 class StudentsList
-  def initialize(file_path)
-    @file_path = file_path
+  attr_accessor :strategy
+
+  def initialize(strategy)
+    @strategy = strategy
     @students = []
   end
 
-  def read_all
-    raise NotImplementedError, 'Метод должен быть реализован в подклассах'
+  def load_from_file(file_path)
+    @students = @strategy.read(file_path)
   end
 
-  def write_all
-    raise NotImplementedError, 'Метод должен быть реализован в подклассах'
+  def save_to_file(file_path)
+    @strategy.write(file_path, @students)
   end
 
   def get_student_by_id(id)
@@ -55,56 +55,39 @@ class StudentsList
   end
 end
 
-# Класс для работы с JSON
-class StudentsListJSON < StudentsList
-  def read_all
-    file_content = File.read(@file_path)
-    parsed_data = JSON.parse(file_content, symbolize_names: true)
-    @students = parsed_data.map do |student_hash|
-      Student.new(**student_hash)
-    end
+# Интерфейс стратегии
+class StudentsListStrategy
+  def read(file_path)
+    raise NotImplementedError, 'Метод должен быть реализован в подклассах'
   end
 
-  def write_all
-    data = @students.map do |student|
-      {
-        id: student.id,
-        last_name: student.last_name,
-        first_name: student.first_name,
-        middle_name: student.middle_name,
-        phone: student.phone,
-        telegram: student.telegram,
-        email: student.email,
-        github: student.github
-      }
-    end
-    File.write(@file_path, JSON.pretty_generate(data))
+  def write(file_path, students)
+    raise NotImplementedError, 'Метод должен быть реализован в подклассах'
   end
 end
 
-# Класс для работы с YAML
-class StudentsListYAML < StudentsList
-  def read_all
-    file_content = File.read(@file_path)
-    parsed_data = YAML.safe_load(file_content, symbolize_names: true)
-    @students = parsed_data.map do |student_hash|
-      Student.new(**student_hash)
-    end
+# Реализация для JSON
+require 'json'
+
+class StudentsListJSON < StudentsListStrategy
+  def read(file_path)
+    JSON.parse(File.read(file_path)).map { |student_data| Student.new(**student_data.transform_keys(&:to_sym)) }
   end
 
-  def write_all
-    data = @students.map do |student|
-      {
-        id: student.id,
-        last_name: student.last_name,
-        first_name: student.first_name,
-        middle_name: student.middle_name,
-        phone: student.phone,
-        telegram: student.telegram,
-        email: student.email,
-        github: student.github
-      }
-    end
-    File.write(@file_path, YAML.dump(data))
+  def write(file_path, students)
+    File.write(file_path, students.map(&:to_h).to_json)
+  end
+end
+
+# Реализация для YAML
+require 'yaml'
+
+class StudentsListYAML < StudentsListStrategy
+  def read(file_path)
+    YAML.load_file(file_path).map { |student_data| Student.new(**student_data.transform_keys(&:to_sym)) }
+  end
+
+  def write(file_path, students)
+    File.write(file_path, students.map(&:to_h).to_yaml)
   end
 end

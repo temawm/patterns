@@ -92,8 +92,41 @@ class DataListStudentShort {
 }
 
 DataList <|-- DataListStudentShort
-DataList o-- DataTable : "generates"
+DataList ---> DataTable : "generates"
 DataList *-- Student_short : "elements"
+
+class StudentsList {
+    - strategy: StudentsListStrategy
+    + initialize(strategy: StudentsListStrategy)
+    + read_all(): Array<Student>
+    + write_all(students: Array<Student>)
+    + get_student_by_id(id: Int): Student
+    + get_k_n_student_short_list(k: Int, n: Int, data_list: DataListStudentShort = nil): DataListStudentShort
+    + add_student(student: Student)
+    + replace_student(id: Int, student: Student)
+    + delete_student(id: Int)
+    + get_student_short_count(): Int
+}
+
+interface StudentsListStrategy {
+    + read_all(): Array<Student>
+    + write_all(students: Array<Student>)
+}
+
+class StudentsListJSON {
+    + read_all(): Array<Student>
+    + write_all(students: Array<Student>)
+}
+
+class StudentsListYAML {
+    + read_all(): Array<Student>
+    + write_all(students: Array<Student>)
+}
+DataList o-- StudentsList
+Student o-- StudentsList
+StudentsList *-- StudentsListStrategy
+StudentsListStrategy <|.. StudentsListJSON
+StudentsListStrategy <|.. StudentsListYAML
 
 @enduml
 
