@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "last_name": "Ivanov",
+    "first_name": "Ivan",
+    "middle_name": "Ivanovich",
+    "phone": "1234567890",
+    "telegram": "@example",
+    "email": "Test@example.com",
+    "github": "https://github.com/ivanov"
+  },
+  {
+    "id": 2,
+    "last_name": "Joker",
+    "first_name": "Alexandr",
+    "middle_name": "Gartenovich",
+    "phone": "1234567890",
+    "telegram": "@Joker",
+    "email": "Joker@example.com",
+    "github": "https://github.com/joker"
+  },
+  {
+    "id": 3,
+    "last_name": "Petrov",
+    "first_name": "Petr",
+    "middle_name": "Petrovich",
+    "phone": "9876543210",
+    "telegram": "@petrova",
+    "email": "petrov@example.com",
+    "github": "https://github.com/petrov"
+  },
+  {
+    "id": 4,
+    "last_name": "Sidorov",
+    "first_name": "Sidr",
+    "middle_name": "Sidorovich",
+    "phone": "5678901234",
+    "telegram": "@sidorov",
+    "email": "sidorov@example.com",
+    "github": "https://github.com/sidorov"
+  },
+  {
+    "id": 5,
+    "last_name": "Smirnov",
+    "first_name": "Sergey",
+    "middle_name": "Sergeevich",
+    "phone": "3456789012",
+    "telegram": "@smirnov",
+    "email": "smirnov@example.com",
+    "github": "https://github.com/smirnov"
+  },
+  {
+    "id": 6,
+    "last_name": "Vasiliev",
+    "first_name": "Vasily",
+    "middle_name": "Vasilievich",
+    "phone": "2345678901",
+    "telegram": "@vasiliev",
+    "email": "vasiliev@example.com",
+    "github": "https://github.com/vasiliev"
+  },
+  {
+    "id": 7,
+    "last_name": "Kuznetsov",
+    "first_name": "Nikolai",
+    "middle_name": "Nikolaevich",
+    "phone": "1238904567",
+    "telegram": "@kuznetsov",
+    "email": "kuznetsov@example.com",
+    "github": "https://github.com/kuznetsov"
+  }
+]

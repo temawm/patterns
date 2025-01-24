@@ -12,6 +12,19 @@ class Student < Person
     set_contacts(phone: phone, telegram: telegram, email: email)
   end
   
+  def to_h
+    {
+      id: @id,
+      last_name: @last_name,
+      first_name: @first_name,
+      middle_name: @middle_name,
+      phone: @phone,
+      telegram: @telegram,
+      email: @email,
+      github: @github
+    }
+  end  
+  
   def set_contacts(phone: nil, telegram: nil, email: nil)
     self.phone = phone
     self.telegram = telegram

@@ -1,5 +1,13 @@
 require 'C:/Users/temaf/NotepadFiles/OOP_in_Ruby/student_short'
 require 'C:/Users/temaf/NotepadFiles/OOP_in_Ruby/student'
+
+# Путь к JSON-файлу для чтения
+input_file_path = "C:/Users/temaf/NotepadFiles/Models_class/student.json"
+
+# Путь для записи результата
+output_file_path = "C:/Users/temaf/NotepadFiles/Models_class/student_output.json"
+
+
 class StudentsList
   attr_accessor :strategy
 
@@ -66,7 +74,6 @@ class StudentsListStrategy
   end
 end
 
-# Реализация для JSON
 require 'json'
 
 class StudentsListJSON < StudentsListStrategy
@@ -75,11 +82,13 @@ class StudentsListJSON < StudentsListStrategy
   end
 
   def write(file_path, students)
-    File.write(file_path, students.map(&:to_h).to_json)
+    formatted_json = JSON.pretty_generate(students.map(&:to_h))
+    File.open(file_path, 'w') do |file|
+      file.write(formatted_json)
+    end
   end
 end
 
-# Реализация для YAML
 require 'yaml'
 
 class StudentsListYAML < StudentsListStrategy
@@ -88,6 +97,18 @@ class StudentsListYAML < StudentsListStrategy
   end
 
   def write(file_path, students)
-    File.write(file_path, students.map(&:to_h).to_yaml)
+    formatted_yaml = students.map(&:to_h).to_yaml(line_width: -1)
+    File.open(file_path, 'w') do |file|
+      file.write(formatted_yaml)
+    end
   end
 end
+
+
+
+students_list = StudentsList.new(StudentsListJSON.new)
+students_list.load_from_file(input_file_path)
+
+students_list.save_to_file(output_file_path)
+
+puts "Студенты успешно записаны в файл: #{output_file_path}"
