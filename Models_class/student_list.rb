@@ -47,14 +47,11 @@ class StudentsList
   end
 
   def get_k_n_student_short_list(k, n, data_list = nil)
-    start_index = (k - 1) * n
-    student_slice = @students[start_index, n]
-    short_list = student_slice.map do |student|
-      StudentShort.from_student(student)
-    end
+   
+    student_slice = @students[k - 1, n]
 
     data_list ||= DataList.new([])
-    data_list.set_elements(short_list)
+    data_list.set_elements(student_slice)
     data_list
   end
 
@@ -105,10 +102,3 @@ class StudentsListYAML < StudentsListStrategy
 end
 
 
-
-students_list = StudentsList.new(StudentsListJSON.new)
-students_list.load_from_file(input_file_path)
-
-students_list.save_to_file(output_file_path)
-
-puts "Студенты успешно записаны в файл: #{output_file_path}"

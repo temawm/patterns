@@ -6,13 +6,13 @@ class DataTable
   def get_element(row, col)
     @data[row][col]
   end
-
+  
   def columns_count
-    @data.empty? ? 0 : @data.first.size
+    @data.to_a.empty? ? 0 : @data.first.size
   end
 
   def rows_count
-    @data.size
+    @data.to_a.size
   end
   
   def to_a
@@ -20,7 +20,7 @@ class DataTable
   end
   
   def each(&block)
-    @data.each(&block)
+    @data.to_a.each(&block)
   end
  
 end

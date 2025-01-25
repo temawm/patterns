@@ -41,7 +41,7 @@ class Student < Person
   end
   
   def self.valid_name_parts?(string)
-    string.match?(/\A[A-ZА-Я][a-zа-яё\-']{0,}\z/)
+    string.match?(/\A[\w\s\-']+\z/)
   end
   
   def middle_name=(middle_name)
@@ -78,6 +78,22 @@ class Student < Person
 	return phone if phone
 	return telegram if telegram
 	return email if email
+  end
+  
+  def values_at(attributes)
+    attributes.map do |attr|
+      case attr.to_s
+	  when 'id' then @id
+	  when 'first_name' then @first_name
+	  when 'middle_name' then @middle_name
+	  when 'last_name' then @last_name
+      when 'phone' then @phone
+	  when 'email' then @email
+	  when 'telegram' then @telegram
+      when 'github' then @github
+      else nil
+      end
+    end
   end
   
   private

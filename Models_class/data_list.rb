@@ -1,7 +1,7 @@
 require_relative 'data_table'
 
 class DataList
-  def initialize(elements)
+  def initialize(elements = nil)
     @elements = elements
     @selected = []
   end
@@ -11,9 +11,7 @@ class DataList
   end
   
   def get_data
-    names = get_names
-    table_data = generate_data(names)
-    DataTable.new(table_data)
+    @elements
   end
 
   def select(number)
@@ -26,10 +24,8 @@ class DataList
   end
 
   def get_names
-    raise NotImplementedError, "Метод должен быть реализован в наследниках"
   end
 
-  def generate_data
-    raise NotImplementedError, "Метод должен быть реализован в наследниках"
+  def generate_data(names)
   end
 end
